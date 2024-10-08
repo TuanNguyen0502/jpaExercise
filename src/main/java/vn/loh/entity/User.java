@@ -2,15 +2,10 @@ package vn.loh.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.sql.Date;
 
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "users")
 @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
@@ -48,6 +43,9 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
     private Role role;
+
+    public User() {
+    }
 
     public int getId() {
         return id;

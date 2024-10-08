@@ -2,6 +2,7 @@ package vn.loh.dao.implement;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import vn.loh.configs.JPAConfig;
 import vn.loh.dao.IRoleDao;
@@ -13,42 +14,72 @@ import java.util.List;
 public class UserDaoImpl implements IUserDao {
     @Override
     public List<User> findAll() {
-        EntityManager enma = JPAConfig.getEntityManager();
-        TypedQuery<User> query = enma.createNamedQuery("User.findAll", User.class);
-        return query.getResultList();
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        TypedQuery<User> query = entityManager.createNamedQuery("User.findAll", User.class);
+        List<User> users = query.getResultList();
+        entityManager.close();
+        return users;
     }
 
     @Override
     public User findById(int id) {
-        EntityManager enma = JPAConfig.getEntityManager();
-        User user = enma.find(User.class, id);
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        User user = entityManager.find(User.class, id);
+        entityManager.close();
         return user;
     }
 
     @Override
     public User findByUsername(String username) {
         EntityManager entityManager = JPAConfig.getEntityManager();
-        String jpql = "SELECT u FROM User u WHERE u.username like :username";
+        String jpql = "SELECT u FROM User u WHERE u.username = :username";
         TypedQuery<User> query = entityManager.createQuery(jpql, User.class);
-        query.setParameter("username", "%" + username + "%");
-        List<User> users = query.getResultList();
-        if (!users.isEmpty()) {
-            return users.getFirst();
+        query.setParameter("username", username);
+        User user = null;
+        try {
+            user = query.getSingleResult();
+        } catch (NoResultException e) {
+            // Handle no result found
+            System.out.println("No user found with username: " + username);
+        } finally {
+            entityManager.close();
         }
-        return null;
+        return user;
     }
 
     @Override
     public User findByEmail(String email) {
-        EntityManager enma = JPAConfig.getEntityManager();
-        User user = enma.find(User.class, email);
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        String spql = "SELECT u FROM User u WHERE u.email = :email";
+        TypedQuery<User> query = entityManager.createQuery(spql, User.class);
+        query.setParameter("email", email);
+        User user = null;
+        try {
+            user = query.getSingleResult();
+        } catch (NoResultException e) {
+            // Handle no result found
+            System.out.println("No user found with email: " + email);
+        } finally {
+            entityManager.close();
+        }
         return user;
     }
 
     @Override
     public User findByPhone(String phone) {
-        EntityManager enma = JPAConfig.getEntityManager();
-        User user = enma.find(User.class, phone);
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        String spql = "SELECT u FROM User u WHERE u.phone = :phone";
+        TypedQuery<User> query = entityManager.createQuery(spql, User.class);
+        query.setParameter("phone", phone);
+        User user = null;
+        try {
+            user = query.getSingleResult();
+        } catch (NoResultException e) {
+            // Handle no result found
+            System.out.println("No user found with email: " + phone);
+        } finally {
+            entityManager.close();
+        }
         return user;
     }
 
@@ -103,16 +134,16 @@ public class UserDaoImpl implements IUserDao {
     @Override
     public boolean updatePassword(String username, String password) {
         boolean isSuccess = false;
-        EntityManager enma = JPAConfig.getEntityManager();
-        EntityTransaction trans = enma.getTransaction();
+        EntityManager entityManager = JPAConfig.getEntityManager();
+        EntityTransaction trans = entityManager.getTransaction();
         try {
             trans.begin();
             // Get user by username
-            User user = enma.find(User.class, username);
+            User user = entityManager.find(User.class, username);
             if (user != null) {
                 user.setPassword(password);
                 // Call method to insert, update, delete
-                enma.merge(user);
+                entityManager.merge(user);
                 isSuccess = true;
             }
             trans.commit();
@@ -121,7 +152,7 @@ public class UserDaoImpl implements IUserDao {
             trans.rollback();
             throw e;
         } finally {
-            enma.close();
+            entityManager.close();
         }
         return isSuccess;
     }

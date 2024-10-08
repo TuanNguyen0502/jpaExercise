@@ -2,16 +2,10 @@ package vn.loh.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Entity
 @Table(name = "categories")
 @NamedQuery(name = "Category.findAll", query = "SELECT c FROM Category c")
@@ -48,5 +42,48 @@ public class Category implements Serializable {
         video.setCategory(null);
 
         return video;
+    }
+
+    public Category() {
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public @NotEmpty(message = "Name is required") String getName() {
+        return name;
+    }
+
+    public void setName(@NotEmpty(message = "Name is required") String name) {
+        this.name = name;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public List<Video> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(List<Video> videos) {
+        this.videos = videos;
     }
 }

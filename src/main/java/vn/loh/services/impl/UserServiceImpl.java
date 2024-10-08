@@ -70,7 +70,7 @@ public class UserServiceImpl implements IUserService {
     public static void main(String[] args) {
         try {
             IUserService userService = new UserServiceImpl();
-            System.out.println(userService.login("tuantp2004", "123"));
+            System.out.println(userService.checkExistEmail("tuan@gmail.com"));
         } catch (Exception e) {
             e.printStackTrace();
         }
