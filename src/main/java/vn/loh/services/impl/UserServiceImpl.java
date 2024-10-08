@@ -49,17 +49,32 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean checkExistUsername(String username) {
-        return userDao.checkExistUsername(username);
+        boolean duplicate = false;
+        User user = findByUsername(username);
+        if (user != null) {
+            duplicate = true;
+        }
+        return duplicate;
     }
 
     @Override
     public boolean checkExistEmail(String email) {
-        return userDao.checkExistEmail(email);
+        boolean duplicate = false;
+        User user = userDao.findByEmail(email);
+        if (user != null) {
+            duplicate = true;
+        }
+        return duplicate;
     }
 
     @Override
     public boolean checkExistPhone(String phone) {
-        return userDao.checkExistPhone(phone);
+        boolean duplicate = false;
+        User user = userDao.findByPhone(phone);
+        if (user != null) {
+            duplicate = true;
+        }
+        return duplicate;
     }
 
     @Override

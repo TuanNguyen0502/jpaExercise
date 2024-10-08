@@ -102,36 +102,6 @@ public class UserDaoImpl implements IUserDao {
     }
 
     @Override
-    public boolean checkExistUsername(String username) {
-        boolean duplicate = false;
-        User user = findByUsername(username);
-        if (user != null) {
-            duplicate = true;
-        }
-        return duplicate;
-    }
-
-    @Override
-    public boolean checkExistEmail(String email) {
-        boolean duplicate = false;
-        User user = findByEmail(email);
-        if (user != null) {
-            duplicate = true;
-        }
-        return duplicate;
-    }
-
-    @Override
-    public boolean checkExistPhone(String phone) {
-        boolean duplicate = false;
-        User user = findByPhone(phone);
-        if (user != null) {
-            duplicate = true;
-        }
-        return duplicate;
-    }
-
-    @Override
     public boolean updatePassword(String username, String password) {
         boolean isSuccess = false;
         EntityManager entityManager = JPAConfig.getEntityManager();
