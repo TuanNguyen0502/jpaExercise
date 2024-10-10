@@ -40,7 +40,7 @@
                     <span class="label label-danger">Inactive</span>
                 </c:if>
             </td>
-            <td><a href="<c:url value='/admin/category/videos?id=${cate.id}'/>" class="center">Videos</a></td>
+            <td><a href="<c:url value='/admin/category/videos?categoryId=${cate.id}'/>" class="center">Videos</a></td>
             <td>
                 <a href="<c:url value='/admin/category/edit?id=${cate.id}'/>" class="center">Sửa</a>
                 |
