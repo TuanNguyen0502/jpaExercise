@@ -8,14 +8,14 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/commons/taglib.jsp" %>
 
-<form action="${pageContext.request.contextPath}/admin/category/videos/edit" method="post">
-    <label for="id">ID:</label><br>
-    <input type="text" id="id" name="id" value="${video.id}"><br>
+<form action="${pageContext.request.contextPath}/admin/category/video/edit" method="post">
+    <input type="text" id="category_id" name="categoryId" value="${video.category.id}" hidden="hidden">
+    <input type="text" id="id" name="id" value="${video.id}" hidden="hidden">
 
     <label for="statuson">Status:</label><br>
-    <input type="radio" id="statuson" name="status" value="1" ${video.active==1 ? 'checked' : ''}>
+    <input type="radio" id="statuson" name="active" value="1" ${video.active==1 ? 'checked' : ''}>
     <label for="statuson">Active</label><br>
-    <input type="radio" id="statusoff" name="status" value="0" ${video.active == 0 ? 'checked' : ''}>
+    <input type="radio" id="statusoff" name="active" value="0" ${video.active == 0 ? 'checked' : ''}>
     <label for="statusoff">Inactive</label><br><br>
 
     <label for="description">Description:</label><br>
