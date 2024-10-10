@@ -13,9 +13,9 @@
     <tr>
         <th>STT</th>
         <th>Image</th>
-        <th>Id</th>
         <th>Name</th>
         <th>Status</th>
+        <th>Videos</th>
         <th>Action</th>
     </tr>
 
@@ -31,7 +31,6 @@
                 </c:if>
                 <img height="150" width="200" src="${imgUrl}"/>
             </td>
-            <td>${cate.id}</td>
             <td>${cate.name}</td>
             <td>
                 <c:if test="${cate.status == 1}">
@@ -41,6 +40,7 @@
                     <span class="label label-danger">Inactive</span>
                 </c:if>
             </td>
+            <td><a href="<c:url value='/admin/category/videos?id=${cate.id}'/>" class="center">Videos</a></td>
             <td>
                 <a href="<c:url value='/admin/category/edit?id=${cate.id}'/>" class="center">Sửa</a>
                 |
