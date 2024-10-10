@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/commons/taglib.jsp" %>
 
-<a href="${pageContext.request.contextPath}/admin/category/videos/add">Add Video</a>
+<a href="<c:url value='/admin/category/video/add?id=${categoryId}'/>" class="center">Add Video</a>
 <table border="1" width="100%">
     <tr>
         <th>STT</th>
@@ -26,10 +26,10 @@
             <td>${STT.index + 1}</td>
             <td>${video.id}</td>
             <td>
-                <c:if test="${cate.status == 1}">
+                <c:if test="${video.active == 1}">
                     <span class="label label-success">Active</span>
                 </c:if>
-                <c:if test="${cate.status == 0}">
+                <c:if test="${video.active == 0}">
                     <span class="label label-danger">Inactive</span>
                 </c:if>
             </td>
