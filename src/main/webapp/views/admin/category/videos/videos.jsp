@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ include file="/commons/taglib.jsp" %>
 
-<a href="<c:url value='/admin/category/video/add?id=${categoryId}'/>" class="center">Add Video</a>
+<a href="<c:url value='/admin/category/video/add?categoryId=${categoryId}'/>" class="center">Add Video</a>
 <table border="1" width="100%">
     <tr>
         <th>STT</th>
@@ -40,7 +40,7 @@
             <td>
                 <a href="<c:url value='/admin/category/video/edit?id=${video.id}'/>" class="center">Sửa</a>
                 |
-                <a href="<c:url value='/admin/category/video/delete?id=${video.id}'/>" class="center">Xóa</a>
+                <a href="<c:url value='/admin/category/video/delete?id=${video.id}&categoryId=${categoryId}'/>" class="center">Xóa</a>
             </td>
         </tr>
     </c:forEach>

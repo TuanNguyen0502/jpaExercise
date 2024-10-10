@@ -35,7 +35,7 @@ public class VideosController extends HttpServlet {
             showVideos(req, resp);
         } else if (url.contains("/admin/category/video/add")) {
             // Get Category ID from URL
-            int categoryId = Integer.parseInt(req.getParameter("id"));
+            int categoryId = Integer.parseInt(req.getParameter("categoryId"));
             // Set Category ID to form
             req.setAttribute("categoryId", categoryId);
             // Show form add category
@@ -49,18 +49,19 @@ public class VideosController extends HttpServlet {
             req.setAttribute("video", video);
             // Show form edit category
             req.getRequestDispatcher("/views/admin/category/videos/video-edit.jsp").forward(req, resp);
-        } else if (url.contains("/admin/category/delete")) {
+        } else if (url.contains("/admin/category/video/delete")) {
             // Get id from url
             String id = req.getParameter("id");
+            // Get Category ID from URL
+            int categoryId = Integer.parseInt(req.getParameter("categoryId"));
             // Delete data from database
-            // Suggest delete image file on device !!!
             try {
                 videoService.delete(id);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             // Show list categories
-            resp.sendRedirect(req.getContextPath() + "/admin/category/videos");
+            resp.sendRedirect(req.getContextPath() + "/admin/category/videos?categoryId=" + req.getParameter("categoryId"));
         }
     }
 
